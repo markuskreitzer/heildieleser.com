@@ -1,4 +1,4 @@
-import { editorials, findEditorial } from '$lib/content.js';
+import { editorials, findEditorial } from '#lib/content.js';
 import { error } from '@sveltejs/kit';
 
 export function entries() {

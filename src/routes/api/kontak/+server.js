@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
+import { CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL, RESEND_API_KEY } from '$app/env/private';
 
 export const prerender = false;
 
@@ -11,9 +11,9 @@ const MIN_FILL_MS = 2000; // humans take at least 2 s to fill the form
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST({ request }) {
-  const toEmail = env.CONTACT_TO_EMAIL;
-  const fromEmail = env.CONTACT_FROM_EMAIL;
-  const apiKey = env.RESEND_API_KEY;
+  const toEmail = CONTACT_TO_EMAIL;
+  const fromEmail = CONTACT_FROM_EMAIL;
+  const apiKey = RESEND_API_KEY;
 
   if (!toEmail || !fromEmail || !apiKey) {
     return json(

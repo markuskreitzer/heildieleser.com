@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import Ornament from '$lib/components/Ornament.svelte';
-  import { t } from '$lib/i18n.js';
+  import Ornament from '#lib/components/Ornament.svelte';
+  import { t } from '#lib/i18n.js';
   let { data } = $props();
   let lang = $derived(data.lang);
 
