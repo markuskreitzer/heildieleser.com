@@ -1,6 +1,6 @@
 <script>
-  import Ornament from '$lib/components/Ornament.svelte';
-  import { t, langPath } from '$lib/i18n.js';
+  import Ornament from '#lib/components/Ornament.svelte';
+  import { t, langPath } from '#lib/i18n.js';
   let { data } = $props();
   let lang = $derived(data.lang);
 

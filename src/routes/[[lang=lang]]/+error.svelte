@@ -1,10 +1,10 @@
 <script>
-  import { page } from '$app/stores';
-  import Ornament from '$lib/components/Ornament.svelte';
+  import { page } from '$app/state';
+  import Ornament from '#lib/components/Ornament.svelte';
 </script>
 
 <svelte:head>
-  <title>{$page.status} · Heil die Leser</title>
+  <title>{page.status} · Heil die Leser</title>
 </svelte:head>
 
 <article>
@@ -16,7 +16,7 @@
   </header>
 
   <div class="content">
-    {#if $page.status === 404}
+    {#if page.status === 404}
       <p>
         Dit lyk asof hierdie bladsy soos ’n wintersmis oor die Hawekwas
         opgetrek het. Dalk het dit tussen die wingerde by Welbedacht gaan
@@ -44,7 +44,7 @@
     {:else}
       <p>
         Iets het onverwags skeefgeloop op hierdie bladsy. Die bediener meld:
-        <em>{$page.error?.message ?? 'onbekende fout'}</em>.
+        <em>{page.error?.message ?? 'onbekende fout'}</em>.
       </p>
       <p class="hint">
         Keer gerus terug na <a href="/">die hoofblad</a> en probeer weer.

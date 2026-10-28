@@ -1,17 +1,35 @@
 <script>
   import '../../app.css';
-  import { dev } from '$app/environment';
-  import { injectAnalytics } from '@vercel/analytics/sveltekit';
-  import { page } from '$app/stores';
-  import Masthead from '$lib/components/Masthead.svelte';
-  import Nav from '$lib/components/Nav.svelte';
-  import { t, SITE_URL, altLangPath } from '$lib/i18n.js';
+  import { browser, dev } from '$app/env';
+  import { page } from '$app/state';
+  import { inject, pageview } from '@vercel/analytics';
+  import Masthead from '#lib/components/Masthead.svelte';
+  import Nav from '#lib/components/Nav.svelte';
+  import { t, SITE_URL, altLangPath } from '#lib/i18n.js';
   let { data, children } = $props();
 
-  injectAnalytics({ mode: dev ? 'development' : 'production' });
+  // @vercel/analytics/sveltekit still imports $app/stores and $app/environment,
+  // which Kit 3 removed. Call the public inject/pageview API instead.
+  if (browser) {
+    inject(
+      {
+        mode: dev ? 'development' : 'production',
+        framework: 'sveltekit',
+        disableAutoTrack: true,
+        basePath: import.meta.env.VITE_VERCEL_OBSERVABILITY_BASEPATH
+      },
+      import.meta.env.VITE_VERCEL_OBSERVABILITY_CLIENT_CONFIG
+    );
+  }
+
+  $effect(() => {
+    if (!browser) return;
+    const routeId = page.route?.id;
+    if (routeId) pageview({ route: routeId, path: page.url.pathname });
+  });
 
   let lang = $derived(data.lang);
-  let pathname = $derived($page.url.pathname);
+  let pathname = $derived(page.url.pathname);
   let canonical = $derived(`${SITE_URL}${pathname}`);
   let alternateAf = $derived(`${SITE_URL}${altLangPath(pathname, 'af')}`);
   let alternateEn = $derived(`${SITE_URL}${altLangPath(pathname, 'en')}`);

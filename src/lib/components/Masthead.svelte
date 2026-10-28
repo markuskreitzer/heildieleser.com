@@ -1,5 +1,5 @@
 <script>
-  import { t, langPath } from '$lib/i18n.js';
+  import { t, langPath } from '#lib/i18n.js';
   let { lang = 'af' } = $props();
   let home = $derived(langPath('/', lang));
 </script>

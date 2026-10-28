@@ -1,4 +1,4 @@
-import { prose, findProse } from '$lib/content.js';
+import { prose, findProse } from '#lib/content.js';
 import { error } from '@sveltejs/kit';
 
 export function entries() {

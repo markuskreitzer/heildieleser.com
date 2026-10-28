@@ -1,6 +1,6 @@
 <script>
-  import { page } from '$app/stores';
-  import { t, langPath, altLangPath } from '$lib/i18n.js';
+  import { page } from '$app/state';
+  import { t, langPath, altLangPath } from '#lib/i18n.js';
 
   let { lang = 'af' } = $props();
 
@@ -35,13 +35,13 @@
     }
   ]);
 
-  let afHref = $derived(altLangPath($page.url.pathname, 'af'));
-  let enHref = $derived(altLangPath($page.url.pathname, 'en'));
+  let afHref = $derived(altLangPath(page.url.pathname, 'af'));
+  let enHref = $derived(altLangPath(page.url.pathname, 'en'));
 </script>
 
 <nav class="tabs" aria-label={t('nav.ariaLabel', lang)}>
   {#each tabs as tab}
-    <a href={tab.href} class:active={tab.match($page.url.pathname)}>{tab.label}</a>
+    <a href={tab.href} class:active={tab.match(page.url.pathname)}>{tab.label}</a>
   {/each}
 
   <span class="lang-switch" role="group" aria-label={t('nav.langSwitch', lang)}>
